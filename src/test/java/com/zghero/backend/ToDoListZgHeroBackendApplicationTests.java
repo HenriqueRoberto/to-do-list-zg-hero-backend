@@ -1,4 +1,4 @@
-package com.zghero.todolistzgherobackend;
+package com.zghero.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,13 +1,13 @@
-package com.zghero.todolistzgherobackend;
+package com.zghero.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ToDoListZgHeroBackendApplication {
+public class ZgHeroBackendApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(ToDoListZgHeroBackendApplication.class, args);
+    SpringApplication.run(ZgHeroBackendApplication.class, args);
   }
 
 }
