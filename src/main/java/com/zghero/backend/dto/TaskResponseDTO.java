@@ -10,7 +10,7 @@ public class TaskResponseDTO {
   private String nome;
   private String descricao;
   private String categoria;
-  private int prioridade;
+  private Integer prioridade;
   private Status status;
   private LocalDate dataLimite;
 
@@ -46,11 +46,11 @@ public class TaskResponseDTO {
     this.categoria = categoria;
   }
 
-  public int getPrioridade() {
+  public Integer getPrioridade() {
     return prioridade;
   }
 
-  public void setPrioridade(int prioridade) {
+  public void setPrioridade(Integer prioridade) {
     this.prioridade = prioridade;
   }
 

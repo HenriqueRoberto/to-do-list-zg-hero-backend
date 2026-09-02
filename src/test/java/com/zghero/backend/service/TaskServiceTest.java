@@ -1,5 +1,6 @@
 package com.zghero.backend.service;
 
+import com.zghero.backend.dto.TaskUpdateDTO;
 import com.zghero.backend.model.Task;
 import com.zghero.backend.model.Status;
 import com.zghero.backend.repository.TaskRepository;
@@ -61,7 +62,6 @@ class TaskServiceTest {
     assertEquals(2, resultado.size());
   }
 
-
   @Test
   void deveBuscarTaskPorId() {
     Task task = Task.builder().id("abc").nome("Teste").prioridade(1).build();
@@ -90,7 +90,6 @@ class TaskServiceTest {
     Mockito.verify(taskRepository).deleteById("abc");
   }
 
-
   @Test
   void deveAtualizarParcialmente() {
     Task taskOriginal = Task.builder()
@@ -100,10 +99,9 @@ class TaskServiceTest {
         .status(Status.BACKLOG)
         .build();
 
-    Task dadosNovos = Task.builder()
-        .nome("Nome atualizado")
-        .prioridade(4)
-        .build();
+    TaskUpdateDTO dadosNovos = new TaskUpdateDTO();
+    dadosNovos.setNome("Nome atualizado");
+    dadosNovos.setPrioridade(4);
 
     when(taskRepository.findById("abc")).thenReturn(Optional.of(taskOriginal));
     when(taskRepository.save(any(Task.class))).thenReturn(taskOriginal);
@@ -119,7 +117,11 @@ class TaskServiceTest {
   void deveRetornarNullAoAtualizarIdInexistente() {
     when(taskRepository.findById("xyz")).thenReturn(Optional.empty());
 
-    Task resultado = taskService.atualizarTask("xyz", Task.builder().nome("Teste").prioridade(1).build());
+    TaskUpdateDTO dados = new TaskUpdateDTO();
+    dados.setNome("Teste");
+    dados.setPrioridade(1);
+
+    Task resultado = taskService.atualizarTask("xyz", dados);
 
     assertNull(resultado);
   }

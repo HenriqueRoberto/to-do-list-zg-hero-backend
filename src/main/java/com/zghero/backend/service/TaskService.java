@@ -1,9 +1,11 @@
 package com.zghero.backend.service;
 
+import com.zghero.backend.dto.TaskUpdateDTO;
 import com.zghero.backend.model.Task;
 import com.zghero.backend.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,7 +22,9 @@ public class TaskService {
   }
 
   public List<Task> listarTasks() {
-    return taskRepository.findAll();
+    List<Task> todas = new ArrayList<>(taskRepository.findAll());
+    todas.sort((a, b) -> a.getPrioridade() - b.getPrioridade());
+    return todas;
   }
 
   public Task buscarPorId(String id) {
@@ -31,7 +35,7 @@ public class TaskService {
     taskRepository.deleteById(id);
   }
 
-  public Task atualizarTask(String id, Task dadosNovos) {
+  public Task atualizarTask(String id, TaskUpdateDTO dadosNovos) {
     Task taskExistente = taskRepository.findById(id).orElse(null);
 
     if (taskExistente == null) {
@@ -47,7 +51,7 @@ public class TaskService {
     if (dadosNovos.getCategoria() != null) {
       taskExistente.setCategoria(dadosNovos.getCategoria());
     }
-    if (dadosNovos.getPrioridade() != 0) {
+    if (dadosNovos.getPrioridade() != null) {
       taskExistente.setPrioridade(dadosNovos.getPrioridade());
     }
     if (dadosNovos.getStatus() != null) {
