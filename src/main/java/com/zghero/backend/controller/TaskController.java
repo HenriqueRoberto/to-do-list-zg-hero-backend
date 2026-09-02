@@ -3,6 +3,7 @@ package com.zghero.backend.controller;
 import com.zghero.backend.dto.TaskMapper;
 import com.zghero.backend.dto.TaskRequestDTO;
 import com.zghero.backend.dto.TaskResponseDTO;
+import com.zghero.backend.dto.TaskUpdateDTO;
 import com.zghero.backend.model.Task;
 import com.zghero.backend.service.TaskService;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,15 @@ public class TaskController {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(taskMapper.toResponse(task));
+  }
+
+  @PatchMapping("/{id}")
+  public ResponseEntity<TaskResponseDTO> atualizar(@PathVariable String id, @RequestBody TaskUpdateDTO dto) {
+    Task atualizada = taskService.atualizarTask(id, dto);
+    if (atualizada == null) {
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(taskMapper.toResponse(atualizada));
   }
 
   @DeleteMapping("/{id}")

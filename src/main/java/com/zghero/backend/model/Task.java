@@ -8,7 +8,7 @@ public class Task {
   private String nome;
   private String descricao;
   private String categoria;
-  private int prioridade;
+  private Integer prioridade;
   private Status status;
   private LocalDate dataLimite;
 
@@ -73,11 +73,11 @@ public class Task {
     this.categoria = categoria;
   }
 
-  public int getPrioridade() {
+  public Integer getPrioridade() {
     return prioridade;
   }
 
-  public void setPrioridade(int prioridade) {
+  public void setPrioridade(Integer prioridade) {
     validarPrioridade(prioridade);
     this.prioridade = prioridade;
   }
