@@ -4,6 +4,11 @@ Todas as mudanças notáveis do projeto são documentadas neste arquivo.
 
 O formato segue o [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.0.1] - 2026-09-04
+
+### Adicionado
+- Documentação dos campos do modelo Task no README
+
 ## [1.0.0] - 2026-09-04
 
 ### Adicionado
