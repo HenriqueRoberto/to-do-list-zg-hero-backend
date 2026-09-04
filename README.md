@@ -20,6 +20,18 @@ Repositório do front: https://github.com/HenriqueRoberto/to-do-list-zg-hero-fro
 - Gradle
 - JUnit 5 + Mockito
 
+## Modelo da tarefa (Task)
+
+| Campo        | Tipo      | Obrigatório | Descrição                                    |
+|--------------|-----------|-------------|----------------------------------------------|
+| `id`         | String    | gerado      | Identificador único, gerado automaticamente  |
+| `nome`       | String    | sim         | Nome da tarefa                               |
+| `descricao`  | String    | não         | Descrição detalhada                          |
+| `categoria`  | String    | não         | Categoria da tarefa                          |
+| `prioridade` | Integer   | sim         | Prioridade de 1 a 5                          |
+| `status`     | Status    | não         | BACKLOG (padrão), TODO, DOING ou DONE        |
+| `dataLimite` | LocalDate | não         | Data limite; não pode estar no passado       |
+
 ## Arquitetura
 
 O projeto segue uma separação em camadas:
