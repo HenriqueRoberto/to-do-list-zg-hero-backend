@@ -22,24 +22,25 @@ Repositório do front: https://github.com/HenriqueRoberto/to-do-list-zg-hero-fro
 
 ## Modelo da tarefa (Task)
 
-| Campo        | Tipo      | Obrigatório | Descrição                                    |
-|--------------|-----------|-------------|----------------------------------------------|
-| `id`         | String    | gerado      | Identificador único, gerado automaticamente  |
-| `nome`       | String    | sim         | Nome da tarefa                               |
-| `descricao`  | String    | não         | Descrição detalhada                          |
-| `categoria`  | String    | não         | Categoria da tarefa                          |
-| `prioridade` | Integer   | sim         | Prioridade de 1 a 5                          |
-| `status`     | Status    | não         | BACKLOG (padrão), TODO, DOING ou DONE        |
-| `dataLimite` | LocalDate | não         | Data limite; não pode estar no passado       |
+| Campo         | Tipo      | Obrigatório | Descrição                                    |
+|---------------|-----------|-------------|----------------------------------------------|
+| `id`          | String    | gerado      | Identificador único, gerado automaticamente  |
+| `workspaceId` | String    | sim         | Id do workspace a que a tarefa pertence      |
+| `nome`        | String    | sim         | Nome da tarefa                               |
+| `descricao`   | String    | não         | Descrição detalhada                          |
+| `categoria`   | String    | não         | Categoria da tarefa                          |
+| `prioridade`  | Integer   | sim         | Prioridade de 1 a 5                          |
+| `status`      | Status    | não         | BACKLOG (padrão), TODO, DOING ou DONE        |
+| `dataLimite`  | LocalDate | não         | Data limite; não pode estar no passado       |
 
 ## Arquitetura
 
 O projeto segue uma separação em camadas:
 
-- **model** — entidade `Task` e enum `Status`
+- **model** — entidades `Task`, `Workspace` e enum `Status`
 - **repository** — persistência em memória (interface + implementação)
-- **service** — regras de negócio (CRUD, atualização parcial, ordenação)
-- **dto** — objetos de entrada/saída da API e mapper
+- **service** — regras de negócio (CRUD, atualização parcial, ordenação, filtro por workspace)
+- **dto** — objetos de entrada/saída da API e mappers
 - **controller** — endpoints REST
 - **exception** — tratamento global de erros
 - **config** — configuração de CORS
@@ -64,13 +65,23 @@ A API fica disponível em `http://localhost:8080`.
 
 Base URL: `http://localhost:8080`
 
-| Método | Rota          | Descrição                                         | Corpo (JSON)                                                                                      |
-|--------|---------------|---------------------------------------------------|--------------------------------------------------------------------------------------------------|
-| POST   | `/tasks`      | Cria uma tarefa                                   | `nome`, `prioridade` (obrigatórios); `descricao`, `categoria`, `status`, `dataLimite` (opcionais) |
-| GET    | `/tasks`      | Lista todas as tarefas (ordenadas por prioridade) | —                                                                                                |
-| GET    | `/tasks/{id}` | Busca uma tarefa por id                           | —                                                                                                |
-| PATCH  | `/tasks/{id}` | Atualiza parcialmente uma tarefa                  | qualquer campo (todos opcionais)                                                                 |
-| DELETE | `/tasks/{id}` | Remove uma tarefa                                 | —                                                                                                |
+### Tarefas
+
+| Método | Rota                      | Descrição                                                | Corpo (JSON) |
+|--------|---------------------------|----------------------------------------------------------|--------------|
+| POST   | `/tasks`                  | Cria uma tarefa                                          | `workspaceId`, `nome`, `prioridade` (obrigatórios); `descricao`, `categoria`, `status`, `dataLimite` (opcionais) |
+| GET    | `/tasks?workspaceId={id}` | Lista tarefas de um workspace (ordenadas por prioridade) | — |
+| GET    | `/tasks/{id}`             | Busca uma tarefa por id                                  | — |
+| PATCH  | `/tasks/{id}`             | Atualiza parcialmente uma tarefa                         | qualquer campo (todos opcionais) |
+| DELETE | `/tasks/{id}`             | Remove uma tarefa                                        | — |
+
+### Workspaces
+
+| Método | Rota               | Descrição           | Corpo (JSON) |
+|--------|--------------------|---------------------|--------------|
+| POST   | `/workspaces`      | Cria um workspace   | `nome` (obrigatório) |
+| GET    | `/workspaces`      | Lista todos         | — |
+| DELETE | `/workspaces/{id}` | Remove um workspace | — |
 
 ### Status possíveis
 `BACKLOG` (padrão), `TODO`, `DOING`, `DONE`
@@ -78,13 +89,15 @@ Base URL: `http://localhost:8080`
 ### Exemplo — corpo da requisição de criação
 ```json
 {
-"nome": "Estudar Spring",
-"prioridade": 2,
-"categoria": "Backend"
+  "workspaceId": "w1",
+  "nome": "Estudar Spring",
+  "prioridade": 2,
+  "categoria": "Backend"
 }
 ```
 
 ### Regras de negócio
+- Workspace é obrigatório
 - Nome é obrigatório
 - Prioridade é obrigatória (1 a 5)
 - Status padrão é `BACKLOG`
