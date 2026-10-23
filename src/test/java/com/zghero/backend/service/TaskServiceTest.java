@@ -29,12 +29,14 @@ class TaskServiceTest {
   @Test
   void deveCriarTaskComSucesso() {
     Task taskSemId = Task.builder()
+        .workspaceId("w1")
         .nome("Estudar Java")
         .prioridade(3)
         .build();
 
     Task taskComId = Task.builder()
         .id("abc123")
+        .workspaceId("w1")
         .nome("Estudar Java")
         .prioridade(3)
         .status(Status.BACKLOG)
@@ -51,20 +53,22 @@ class TaskServiceTest {
   }
 
   @Test
-  void deveListarTasks() {
-    Task task1 = Task.builder().id("1").nome("Task 1").prioridade(1).build();
-    Task task2 = Task.builder().id("2").nome("Task 2").prioridade(2).build();
+  void deveListarApenasTarefasDoWorkspace() {
+    Task w1a = Task.builder().id("1").workspaceId("w1").nome("Task 1").prioridade(2).build();
+    Task w1b = Task.builder().id("2").workspaceId("w1").nome("Task 2").prioridade(1).build();
+    Task w2 = Task.builder().id("3").workspaceId("w2").nome("Task 3").prioridade(1).build();
 
-    when(taskRepository.findAll()).thenReturn(List.of(task1, task2));
+    when(taskRepository.findAll()).thenReturn(List.of(w1a, w1b, w2));
 
-    List<Task> resultado = taskService.listarTasks();
+    List<Task> resultado = taskService.listarPorWorkspace("w1");
 
     assertEquals(2, resultado.size());
+    assertEquals("Task 2", resultado.get(0).getNome());
   }
 
   @Test
   void deveBuscarTaskPorId() {
-    Task task = Task.builder().id("abc").nome("Teste").prioridade(1).build();
+    Task task = Task.builder().id("abc").workspaceId("w1").nome("Teste").prioridade(1).build();
 
     when(taskRepository.findById("abc")).thenReturn(Optional.of(task));
 
@@ -94,6 +98,7 @@ class TaskServiceTest {
   void deveAtualizarParcialmente() {
     Task taskOriginal = Task.builder()
         .id("abc")
+        .workspaceId("w1")
         .nome("Nome original")
         .prioridade(2)
         .status(Status.BACKLOG)
