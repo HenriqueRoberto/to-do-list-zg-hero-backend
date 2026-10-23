@@ -1,3 +1,10 @@
+## [1.1.0] - 2026-10-23
+
+### Adicionado
+- CRUD de workspaces (criar, listar, deletar)
+- Campo `workspaceId` nas tarefas
+- Filtro de tarefas por workspace (`GET /tasks?workspaceId=`)
+
 # Changelog
 
 Todas as mudanças notáveis do projeto são documentadas neste arquivo.
