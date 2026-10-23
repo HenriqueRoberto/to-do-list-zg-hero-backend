@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class Task {
 
   private final String id;
+  private final String workspaceId;
   private String nome;
   private String descricao;
   private String categoria;
@@ -14,6 +15,7 @@ public class Task {
 
   private Task(Builder builder) {
     this.id = builder.id;
+    this.workspaceId = builder.workspaceId;
     this.nome = builder.nome;
     this.descricao = builder.descricao;
     this.categoria = builder.categoria;
@@ -44,8 +46,18 @@ public class Task {
     }
   }
 
+  private static void validarWorkspaceId(String workspaceId) {
+    if (workspaceId == null || workspaceId.isBlank()) {
+      throw new IllegalArgumentException("Workspace é obrigatório");
+    }
+  }
+
   public String getId() {
     return id;
+  }
+
+  public String getWorkspaceId() {
+    return workspaceId;
   }
 
   public String getNome() {
@@ -101,6 +113,7 @@ public class Task {
 
   public static class Builder {
     private String id;
+    private String workspaceId;
     private String nome;
     private String descricao;
     private String categoria;
@@ -110,6 +123,11 @@ public class Task {
 
     public Builder id(String id) {
       this.id = id;
+      return this;
+    }
+
+    public Builder workspaceId(String workspaceId) {
+      this.workspaceId = workspaceId;
       return this;
     }
 
@@ -147,6 +165,7 @@ public class Task {
       validarNome(nome);
       validarPrioridade(prioridade);
       validarDataLimite(dataLimite);
+      validarWorkspaceId(workspaceId);
 
       if (status == null) {
         status = Status.BACKLOG;
