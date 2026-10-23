@@ -7,6 +7,7 @@ import java.time.LocalDate;
 public class TaskResponseDTO {
 
   private String id;
+  private String workspaceId;
   private String nome;
   private String descricao;
   private String categoria;
@@ -20,6 +21,14 @@ public class TaskResponseDTO {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public String getWorkspaceId() {
+    return workspaceId;
+  }
+
+  public void setWorkspaceId(String workspaceId) {
+    this.workspaceId = workspaceId;
   }
 
   public String getNome() {

@@ -6,12 +6,21 @@ import java.time.LocalDate;
 
 public class TaskRequestDTO {
 
+  private String workspaceId;
   private String nome;
   private String descricao;
   private String categoria;
   private Integer prioridade;
   private Status status;
   private LocalDate dataLimite;
+
+  public String getWorkspaceId() {
+    return workspaceId;
+  }
+
+  public void setWorkspaceId(String workspaceId) {
+    this.workspaceId = workspaceId;
+  }
 
   public String getNome() {
     return nome;

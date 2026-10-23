@@ -33,9 +33,9 @@ public class TaskController {
   }
 
   @GetMapping
-  public List<TaskResponseDTO> listar() {
+  public List<TaskResponseDTO> listar(@RequestParam String workspaceId) {
     List<TaskResponseDTO> resposta = new ArrayList<>();
-    for (Task task : taskService.listarTasks()) {
+    for (Task task : taskService.listarPorWorkspace(workspaceId)) {
       resposta.add(taskMapper.toResponse(task));
     }
     return resposta;

@@ -8,6 +8,7 @@ public class TaskMapper {
 
   public Task toEntity(TaskRequestDTO dto) {
     return Task.builder()
+        .workspaceId(dto.getWorkspaceId())
         .nome(dto.getNome())
         .descricao(dto.getDescricao())
         .categoria(dto.getCategoria())
@@ -20,6 +21,7 @@ public class TaskMapper {
   public TaskResponseDTO toResponse(Task task) {
     TaskResponseDTO dto = new TaskResponseDTO();
     dto.setId(task.getId());
+    dto.setWorkspaceId(task.getWorkspaceId());
     dto.setNome(task.getNome());
     dto.setDescricao(task.getDescricao());
     dto.setCategoria(task.getCategoria());

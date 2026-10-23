@@ -21,10 +21,15 @@ public class TaskService {
     return taskRepository.save(task);
   }
 
-  public List<Task> listarTasks() {
-    List<Task> todas = new ArrayList<>(taskRepository.findAll());
-    todas.sort((a, b) -> a.getPrioridade() - b.getPrioridade());
-    return todas;
+  public List<Task> listarPorWorkspace(String workspaceId) {
+    List<Task> doWorkspace = new ArrayList<>();
+    for (Task tarefa : taskRepository.findAll()) {
+      if (tarefa.getWorkspaceId().equals(workspaceId)) {
+        doWorkspace.add(tarefa);
+      }
+    }
+    doWorkspace.sort((a, b) -> a.getPrioridade() - b.getPrioridade());
+    return doWorkspace;
   }
 
   public Task buscarPorId(String id) {
