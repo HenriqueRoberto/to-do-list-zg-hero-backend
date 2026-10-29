@@ -1,3 +1,8 @@
+## [1.1.1] - 2026-10-29
+
+### Corrigido
+- Workspace padrão criado no start (sem ele não era possível criar tarefas)
+
 ## [1.1.0] - 2026-10-23
 
 ### Adicionado
