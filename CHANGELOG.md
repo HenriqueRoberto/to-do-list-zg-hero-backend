@@ -1,3 +1,8 @@
+## [1.1.2] - 2026-10-29
+
+### Corrigido
+- `workspaceId` era perdido ao gerar o id da tarefa no repository, impedindo a criação de tarefas
+
 ## [1.1.1] - 2026-10-29
 
 ### Corrigido
