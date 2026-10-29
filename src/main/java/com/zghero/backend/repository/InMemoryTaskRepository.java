@@ -22,6 +22,7 @@ public class InMemoryTaskRepository implements TaskRepository {
 
       Task novaTask = Task.builder()
           .id(novoId)
+          .workspaceId(task.getWorkspaceId())
           .nome(task.getNome())
           .descricao(task.getDescricao())
           .categoria(task.getCategoria())
