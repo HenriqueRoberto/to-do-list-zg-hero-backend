@@ -15,6 +15,14 @@ public class InMemoryWorkspaceRepository implements WorkspaceRepository {
 
   private final Map<String, Workspace> workspaces = new HashMap<>();
 
+  public InMemoryWorkspaceRepository() {
+    Workspace padrao = Workspace.builder()
+        .id("default")
+        .nome("Pessoal")
+        .build();
+    workspaces.put(padrao.getId(), padrao);
+  }
+
   @Override
   public Workspace save(Workspace workspace) {
     if (workspace.getId() == null) {
